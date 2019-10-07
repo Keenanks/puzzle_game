@@ -16,6 +16,7 @@ var cancelAnimationFrame = window.cancelAnimationFrame ||
 var backgroundImg = PIXI.Texture.fromImage("sprites/backgroundExit.png");
 var backgroundTitleImg = PIXI.Texture.fromImage("sprites/background.png");
 var room1Back = PIXI.Texture.fromImage("sprites/room1.png");
+var room2Back = PIXI.Texture.fromImage("sprites/room1.png");
 var topDoorTexture = PIXI.Texture.fromImage("sprites/doorTop.png");
 var leftDoorTexture = PIXI.Texture.fromImage("sprites/doorLeftSide.png");
 var rightDoorTexture = PIXI.Texture.fromImage("sprites/doorRightSide.png");
@@ -24,6 +25,109 @@ var switchOnTexture = PIXI.Texture.fromImage("sprites/switchOn.png");
 var switchOffTexture = PIXI.Texture.fromImage("sprites/switchOff.png");
 var endTexture = PIXI.Texture.fromImage("sprites/endScreen.png");
 var titleTexture = PIXI.Texture.fromImage("sprites/title.png");
+var resetTexture = PIXI.Texture.fromImage("sprites/reset.png");
+var clownTexture = PIXI.Texture.fromImage("sprites/clown.png");
+
+// Number images
+var negTexture = PIXI.Texture.fromFrame("sprites/numbers1.png");
+var zeroTexture = PIXI.Texture.fromFrame("sprites/numbers2.png");
+var oneTexture = PIXI.Texture.fromFrame("sprites/numbers3.png");
+var twoTexture = PIXI.Texture.fromFrame("sprites/numbers4.png");
+var threeTexture = PIXI.Texture.fromFrame("sprites/numbers5.png");
+var fourTexture = PIXI.Texture.fromFrame("sprites/numbers6.png");
+var fiveTexture = PIXI.Texture.fromFrame("sprites/numbers7.png");
+var sixTexture = PIXI.Texture.fromFrame("sprites/numbers8.png");
+var sevenTexture = PIXI.Texture.fromFrame("sprites/numbers9.png");
+var eightTexture = PIXI.Texture.fromFrame("sprites/numbers10.png");
+var nineTexture = PIXI.Texture.fromFrame("sprites/numbers11.png");
+// end of number images
+
+// number sprites
+var neg = new PIXI.Sprite(negTexture);
+		neg.interactive = true;
+		neg.buttonMode = true;
+		neg.on("mousedown", (event) => {
+			puzzle2String += "-";
+			checkEqSolved();
+		});
+var one = new PIXI.Sprite(oneTexture);
+		one.interactive = true;
+		one.buttonMode = true;
+		one.on("mousedown", (event) => {
+			puzzle2String += "1";
+			checkEqSolved();
+		});
+var two = new PIXI.Sprite(twoTexture);
+		two.interactive = true;
+		two.buttonMode = true;
+		two.on("mousedown", (event) => {
+			puzzle2String += "2";
+			checkEqSolved();
+		});
+var three = new PIXI.Sprite(threeTexture);
+		three.interactive = true;
+		three.buttonMode = true;
+		three.on("mousedown", (event) => {
+			puzzle2String += "3";
+			checkEqSolved();
+		});
+var four = new PIXI.Sprite(fourTexture);
+		four.interactive = true;
+		four.buttonMode = true;
+		four.on("mousedown", (event) => {
+			puzzle2String += "4";
+			checkEqSolved();
+		});
+var five = new PIXI.Sprite(fiveTexture);
+		five.interactive = true;
+		five.buttonMode = true;
+		five.on("mousedown", (event) => {
+			puzzle2String += "5";
+			checkEqSolved();
+		});
+var six = new PIXI.Sprite(sixTexture);
+		six.interactive = true;
+		six.buttonMode = true;
+		six.on("mousedown", (event) => {
+			puzzle2String += "6";
+			checkEqSolved();
+		});
+var seven = new PIXI.Sprite(sevenTexture);
+		seven.interactive = true;
+		seven.buttonMode = true;
+		seven.on("mousedown", (event) => {
+			puzzle2String += "7";
+			checkEqSolved();
+		});
+var eight = new PIXI.Sprite(eightTexture);
+		eight.interactive = true;
+		eight.buttonMode = true;
+		eight.on("mousedown", (event) => {
+			puzzle2String += "8";
+			checkEqSolved();
+		});
+var nine = new PIXI.Sprite(nineTexture);
+		nine.interactive = true;
+		nine.buttonMode = true;
+		nine.on("mousedown", (event) => {
+			puzzle2String += "9";
+			checkEqSolved();
+		});
+var zero = new PIXI.Sprite(zeroTexture);
+		zero.interactive = true;
+		zero.buttonMode = true;
+		zero.on("mousedown", (event) => {
+			puzzle2String += "0";
+			checkEqSolved();
+		});
+var reset = new PIXI.Sprite(resetTexture);
+		reset.interactive = true;
+		reset.buttonMode = true;
+		reset.on("mousedown", (event) => {
+			puzzle2String = "";
+			checkEqSolved();
+		});
+// end of number sprites
 
 var tableTexture = PIXI.Texture.fromImage("sprites/tableWithInstructions.png");
 
@@ -51,22 +155,28 @@ var titleScreen = new PIXI.Container();
 var creditsScreen = new PIXI.Container();
 var instructionScreen = new PIXI.Container();
 var puzzleRoom1 = new PIXI.Container();
+var puzzleRoom2 = new PIXI.Container();
 var instruciton1 = new PIXI.Container();
+var instruciton2 = new PIXI.Container();
 var endScreen = new PIXI.Container();
 
 /*initially have all screens except title screen not visible */
 game.visible = false;
 endScreen.visible = false;
 puzzleRoom1.visible = false;
+puzzleRoom2.visible = false;
 creditsScreen.visible = false;
 instructionScreen.visible = false;
 instruciton1.visible = false;
+instruciton2.visible = false;
 titleScreen.visible = true;
 
 /*add screens to parent container */
 stage.addChild(game);
 stage.addChild(puzzleRoom1);
+stage.addChild(puzzleRoom2);
 stage.addChild(instruciton1);
+stage.addChild(instruciton2);
 stage.addChild(endScreen);
 stage.addChild(creditsScreen);
 stage.addChild(instructionScreen);
@@ -74,15 +184,18 @@ stage.addChild(titleScreen);
 
 var background = new PIXI.Sprite(backgroundImg);
 var roomBack = new PIXI.Sprite(room1Back);
+var secondRoomBack = new PIXI.Sprite(room2Back);
 var endScreenBack = new PIXI.Sprite(endTexture);
 var titleBack = new PIXI.Sprite(backgroundTitleImg);
 var topDoor1 = new PIXI.Sprite(topDoorTexture);
 var topDoor2 = new PIXI.Sprite(topDoorTexture);
 var botDoor1 = new PIXI.Sprite(botDoorTexture);
+var exitDoor2 = new PIXI.Sprite(botDoorTexture);
 var botDoor2 = new PIXI.Sprite(botDoorTexture);
 var leaveRoomDoor = new PIXI.Sprite(leftDoorTexture);
 var exitDoor = new PIXI.Sprite(rightDoorTexture);
 var title = new PIXI.Sprite(titleTexture);
+var clown = new PIXI.Sprite(clownTexture);
 
 
 
@@ -107,10 +220,19 @@ var backBtnRoom1 = new PIXI.Sprite(backTextrue);
 		backBtnRoom1.interactive = true;
 		backBtnRoom1.buttonMode = true;
 		backBtnRoom1.on("mousedown", showRoom1);
+var backBtnRoom2 = new PIXI.Sprite(backTextrue);
+		backBtnRoom2.interactive = true;
+		backBtnRoom2.buttonMode = true;
+		backBtnRoom2.on("mousedown", showRoom2);
 var tableGuide1 = new PIXI.Sprite(tableTexture);
 		tableGuide1.interactive = true;
 		tableGuide1.buttonMode = true;
 		tableGuide1.on("mousedown", displayInstruction1);
+		
+var tableGuide2 = new PIXI.Sprite(tableTexture);
+		tableGuide2.interactive = true;
+		tableGuide2.buttonMode = true;
+		tableGuide2.on("mousedown", displayInstruction2);
 		
 /* buttons for game for switches and instructions pages to go back*/
 var switch1 = new PIXI.Sprite(switchOffTexture);
@@ -191,6 +313,9 @@ botDoor1.y = 370;
 botDoor2.x = 500;
 botDoor2.y = 370;
 
+exitDoor2.x = 100;
+exitDoor2.y = 370;
+
 playBtn.x = 500;
 playBtn.y = 100;
 
@@ -206,8 +331,14 @@ backBtn.y = 300;
 backBtnRoom1.x = 800;
 backBtnRoom1.y = 300;
 
+backBtnRoom2.x = 800;
+backBtnRoom2.y = 300;
+
 tableGuide1.x = 500;
 tableGuide1.y = 200;
+
+tableGuide2.x = 500;
+tableGuide2.y = 200;
 
 switch1.x = 800;
 switch1.y = 90;
@@ -224,7 +355,52 @@ leaveRoomDoor.y = 150;
 exitDoor.x = 1050;
 exitDoor.y = 150;
 
+clown.x = 50
+clown.y = 115;
+
+// number locations
+neg.x = 0;
+neg.y = 0;
+zero.x = 100;
+zero.y = 0;
+one.x = 200;
+one.y = 0;
+two.x = 300;
+two.y = 0;
+three.x = 400;
+three.y = 0;
+four.x = 500;
+four.y = 0;
+five.x = 600;
+five.y = 0;
+six.x = 700;
+six.y = 0;
+seven.x = 800;
+seven.y = 0;
+eight.x = 900;
+eight.y = 0;
+nine.x = 1000;
+nine.y = 0;
+reset.x = 1000;
+reset.y = 150;
+// end of number locations
+
 endScreen.addChild(endScreenBack);
+
+puzzleRoom2.addChild(secondRoomBack);
+puzzleRoom2.addChild(tableGuide2);
+puzzleRoom2.addChild(neg);
+puzzleRoom2.addChild(zero);
+puzzleRoom2.addChild(one);
+puzzleRoom2.addChild(two);
+puzzleRoom2.addChild(three);
+puzzleRoom2.addChild(four);
+puzzleRoom2.addChild(five);
+puzzleRoom2.addChild(six);
+puzzleRoom2.addChild(seven);
+puzzleRoom2.addChild(eight);
+puzzleRoom2.addChild(nine);
+puzzleRoom2.addChild(reset);
 
 puzzleRoom1.addChild(roomBack);
 puzzleRoom1.addChild(tableGuide1);
@@ -248,6 +424,7 @@ titleScreen.addChild(playBtn);
 titleScreen.addChild(creditsBtn);
 titleScreen.addChild(instrBtn);
 titleScreen.addChild(title);
+titleScreen.addChild(clown);
 
 
 /*StandingStillImages*/
@@ -273,7 +450,7 @@ var frames = [frontSide];
 PIXI.SCALE_MODES.DEFAULT = PIXI.SCALE_MODES.NEAREST;
 
 PIXI.loader
-  .add("sprites/assets.json")
+  .add("sprites/assets.json","sprites/assets2.json")
   .load(ready);
 
 var switch1Result = 0,switch2Result = 0,switch3Result = 0;
@@ -283,8 +460,10 @@ var xPos = 50;
 var yPos = 200;
 var framesRemoved = false;
 var framesAdded = false;
-var puzzleSolved = false;
-var inRoom1 = false, inMainRoom = true;
+var puzzle1Solved = false, puzzle2Solved = false;
+var inRoom1 = false, inMainRoom = true, inRoom2 = false;
+var puzzle2String = '';
+var correctString = '';
 
 function getRndInteger(min, max) {
   return Math.floor(Math.random() * (max - min + 1) ) + min;
@@ -334,6 +513,22 @@ function displayInstruction1()
 	instruciton1.visible = true;
 }
 
+var stringMade = createEquation();
+function displayInstruction2()
+{
+	var eq = stringMade;
+	var text = new PIXI.Text('Solve the equation( '+ eq +' ) by stepping on the plates\n\r step on reset plate to clear your answer'
+						,{fontFamily : 'Arial', fontSize: 24, fill : 0xff1010, align : 'center'});
+	titleScreen.visible = false;
+	creditsScreen.visible = false;
+	game.visible = false;
+	endScreen.visible = false;
+	puzzleRoom2.visible = false;
+	instruciton2.addChild(backBtnRoom2);
+	instruciton2.addChild(text);
+	instruciton2.visible = true;
+}
+
 function displayTitle()
 {
 	titleScreen.visible = true;
@@ -347,6 +542,12 @@ function showRoom1()
 {
 	instruciton1.visible = false;
 	puzzleRoom1.visible = true;
+}
+
+function showRoom2()
+{
+	instruciton2.visible = false;
+	puzzleRoom2.visible = true;
 }
 
 function randomizeSwitchResult()
@@ -363,8 +564,39 @@ function checkSwitchState()
 		&& switch3State == switch3Result)
 		{
 			puzzleRoom1.addChild(leaveRoomDoor);
-			puzzleSolved = true;
+			puzzle1Solved = true;
 		}
+}
+
+function checkEqSolved()
+{
+	if(puzzle2String == correctString)
+	{
+		puzzle2Solved = true;
+		puzzleRoom2.addChild(exitDoor2);
+	}
+}
+
+function createEquation()
+{
+	var firstInt = getRndInteger(1, 1000);
+	var secondInt = getRndInteger(1, 1000);
+	var result;
+	var sign = getRndInteger(0,1);
+	var str = '';
+	if( sign == 0 )
+	{
+		str = ""+firstInt+" + "+ secondInt + " = ?"
+		result = firstInt + secondInt;
+		correctString = ''+result;
+		return str;
+	}
+	else{
+		str = ""+firstInt+" - "+ secondInt + " = ?"
+		result = firstInt - secondInt;
+		correctString = ''+result;
+		return str;
+	}
 }
 
 var footsteps;
@@ -406,10 +638,22 @@ function ready(){
 				inRoom1 = true;
 			}
 			
-			if(puzzleSolved)
+			if((player.x >= 50 && player.x <= 300) && player.y >= 330)
 			{
+				game.visible = false;
+				puzzleRoom2.addChild(player);
+				puzzleRoom2.visible = true;
+				inMainRoom = false;
+				inRoom1 = false;
+				inRoom2 = true;
+			}
+			
+			if(puzzle1Solved && puzzle2Solved)
+			{
+				game.addChild(exitDoor);
 				if((player.y >= 50 && player.y <= 300) && player.x >= 1030)
 				{
+					
 					endScreen.visible = true;
 					game.visible = false;
 					puzzleRoom1.visible = false;
@@ -421,12 +665,12 @@ function ready(){
 			
 		}
 		
-		if(inRoom1 && puzzleSolved)
+		if(inRoom1 && puzzle1Solved)
 		{
+			//checkCompletion();
 			if((player.y >= 50 && player.y <= 300) && player.x <= 0)
 			{
 				game.addChild(player);
-				game.addChild(exitDoor);
 				game.visible = true;
 				puzzleRoom1.visible = false;
 				inMainRoom = true;
@@ -434,6 +678,28 @@ function ready(){
 			}
 		}
 		
+		if(inRoom2 && puzzle2Solved)
+		{
+			//checkCompletion();
+			if((player.x >= 50 && player.x <= 300) && player.y >= 330)
+			{
+				game.addChild(player);
+				game.visible = true;
+				puzzleRoom2.visible = false;
+				inMainRoom = true;
+				inRoom2 = false;
+			}
+		}
+		
+	}
+	
+	
+	function checkCompletion()
+	{
+		if(puzzle1Solved && puzzle2Solved)
+		{
+			game.appendChild(exitDoor);
+		}
 	}
 	
 	
@@ -495,9 +761,13 @@ function ready(){
 		
 		if( yPos - 12 > -30 )
 		{
+			
 			yPos -= 12;
 			createjs.Tween.get(player.position).to({y: yPos}, 100 , createjs.Ease.linear);
 			footsteps.play();
+			
+		
+			
 		}
 		
 	}
