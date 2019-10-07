@@ -23,6 +23,7 @@ var botDoorTexture = PIXI.Texture.fromImage("sprites/doorBottom.png");
 var switchOnTexture = PIXI.Texture.fromImage("sprites/switchOn.png");
 var switchOffTexture = PIXI.Texture.fromImage("sprites/switchOff.png");
 var endTexture = PIXI.Texture.fromImage("sprites/endScreen.png");
+var titleTexture = PIXI.Texture.fromImage("sprites/title.png");
 
 var tableTexture = PIXI.Texture.fromImage("sprites/tableWithInstructions.png");
 
@@ -81,6 +82,7 @@ var botDoor1 = new PIXI.Sprite(botDoorTexture);
 var botDoor2 = new PIXI.Sprite(botDoorTexture);
 var leaveRoomDoor = new PIXI.Sprite(leftDoorTexture);
 var exitDoor = new PIXI.Sprite(rightDoorTexture);
+var title = new PIXI.Sprite(titleTexture);
 
 
 
@@ -170,7 +172,12 @@ var switch3 = new PIXI.Sprite(switchOffTexture);
 				checkSwitchState();
 			}
 		});
-		
+	
+
+title.x = 10;
+title.y = 10;
+title.scale.x = .5;
+title.scale.y = .5;	
 
 topDoor1.x = 100;
 topDoor1.y = 0;
@@ -235,10 +242,12 @@ text = new PIXI.Text('Made by Keenan Swanson',{fontFamily : 'Arial', fontSize: 2
 
 creditsScreen.addChild(text);
 
+
 titleScreen.addChild(titleBack);
 titleScreen.addChild(playBtn);
 titleScreen.addChild(creditsBtn);
 titleScreen.addChild(instrBtn);
+titleScreen.addChild(title);
 
 
 /*StandingStillImages*/
