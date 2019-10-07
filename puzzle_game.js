@@ -830,7 +830,7 @@ var stringMade = createEquation();
 function displayInstruction2()
 {
 	var eq = stringMade;
-	var text = new PIXI.Text('Solve the equation( '+ eq +' ) by stepping on the plates\n\r step on reset plate to clear your answer'
+	var text = new PIXI.Text('Solve the equation( '+ eq +' ) by pressing the plates\n\r press the reset plate to clear your answer'
 						,{fontFamily : 'Arial', fontSize: 24, fill : 0xff1010, align : 'center'});
 						
 	titleScreen.visible = false;
